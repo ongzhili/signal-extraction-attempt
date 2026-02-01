@@ -22,7 +22,7 @@ Then simply move this to your workspace and extract it.
 
 ## 5. Decrypting the database (by extracting key)
 
-Credits to [https://rado0z.github.io/Decrypt_Android_Database](rado0z) and [https://blog.knugi.com/202107/151300-Decrypting-Signal-Conversation-Database.html](KnugiHK)
+Credits to [rado0z](https://rado0z.github.io/Decrypt_Android_Database) and [KnugiHK](https://blog.knugi.com/202107/151300-Decrypting-Signal-Conversation-Database.html)
 
 We need 3 things.
 
@@ -42,7 +42,7 @@ We need 3 things.
 
 #### 2.1 Cipher 
 
-Image credit to [https://rado0z.github.io/Decrypt_Android_Database](rado0z)
+Image credit to [rado0z](https://rado0z.github.io/Decrypt_Android_Database)
 
 <img width="1109" height="512" alt="image" src="https://raw.githubusercontent.com/Rado0z/Rado0z.github.io/master/assets/CyberChef.png" />
 
