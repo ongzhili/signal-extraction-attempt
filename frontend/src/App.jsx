@@ -4,16 +4,13 @@ import './App.css';
 export default function App() {
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(true);
-  const API_BASE = import.meta.env.VITE_API_BASE;
 
-
-  console.log('API_BASE:', API_BASE);
   useEffect(() => {
     async function fetchMessages() {
       console.log('Fetching messages from API...');
-      console.log('API_BASE:', API_BASE);
+
       try {
-        const res = await fetch(`${API_BASE}/getMessages`);
+        const res = await fetch(`/api/getMessages`);
         console.log('Raw response object:', res);
         const data = await res.json();
         setMessages(data);
