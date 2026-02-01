@@ -4,9 +4,7 @@ import './App.css';
 export default function App() {
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(true);
-  const API_BASE = import.meta.env.DEV
-    ? 'http://localhost:3000'
-    : 'http://backend:3000';
+  const API_BASE = import.meta.env.VITE_API_BASE;
 
 
   console.log('API_BASE:', API_BASE);
