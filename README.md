@@ -45,6 +45,7 @@ We need 3 things.
 - Then, we look for the blob with `keyentryid` corresponding to `id`.
   - Unfortunately, currently stuck here. Not sure which byte offset works (WIP)
   - I'm thinking of bruteforcing all possible 16 byte chunks in the blob.
+    - Did not seem to work.  
 
 #### 2.1 Cipher 
 
