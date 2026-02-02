@@ -1,5 +1,11 @@
 # signal-extraction-attempt
+## Overview
 
+2 Parts
+- Obtaining the decryption key for the db
+- A fullstack web app to view the messages
+
+## Part 1: Extract Messages
 Extracting key and decrypting database: WIP
 
 Done using Android Studio: Android 16, Signal 7.71.2
@@ -49,7 +55,7 @@ Image credit to [rado0z](https://rado0z.github.io/Decrypt_Android_Database)
 In theory we should simply be able to plug in the values in the same format to get the decrypted key.
 
 
-# Running the application
+## Part 2: Running the application
 
 ```shell
 $ docker compose build
