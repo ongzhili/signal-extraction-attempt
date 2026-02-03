@@ -30,6 +30,30 @@ Then simply move this to your workspace and extract it.
 
 ### Attempt 2: Frida
 
+Requirements:
+- `adb` (`brew install android-platform-tools`) (or whatever equivalent is present in linux)
+- `Frida Tools`
+- `frida-server-<version>-<architecture>.xz`
+  - Make sure `version` is the same as `frida`
+
+1. Setting up `frida-server`
+
+```shell
+$ xz -d frida-server-.....-.xz
+$ mv frida-server-..... frida-server (for convenience)
+$ adb push frida-server /data/local/tmp/frida-server
+$ adb shell
+$ chmod 755 /data/local/tmp/frida-server
+$ /data/local/tmp/frida-server & (& just lets it run in the background so that you can use the same shell)
+```
+
+Checking if it works:
+
+- Run `frida-ps -U`. You should see a process list - That means Frida server is setup properly.
+  - Common issues:
+    - `Unable to load SELinux policy from the kernel: Failed to open file ?/sys/fs/selinux/policy?: Permission denied`
+      - `su` before running the `chmod` command and you should be good.  
+
 <img width="681" height="564" alt="image" src="https://github.com/user-attachments/assets/29e3c0b6-8a52-418e-b725-1142cb6f2205" />
 
 We simply observe from the Signal-Android source code that:
