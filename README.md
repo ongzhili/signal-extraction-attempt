@@ -72,6 +72,11 @@ We simply observe from the Signal-Android source code that:
 - We observe from the source code in `app/src/main/java/org/thoughtcrime/securesms/database/SqlCipherDatabaseHook.java` that:
   - We note the PRAGMA `kdf_iter = 1` and `page_size = 4096`. We can set these and `SHA1` in SQLCipher DB browser to view the database entries.
   - We will need to use these PRAGMAs along with the key to programatically open the database though.
+ 
+<img width="754" height="387" alt="image" src="https://github.com/user-attachments/assets/c717873e-b0a8-46f2-88e4-33f03ce631ec" />
+
+- We open the database via DB Browser (SQLCipher) and enter the keys and the PRAGMAS as per image above:
+
 
 <img width="833" height="382" alt="image" src="https://github.com/user-attachments/assets/3d4eee66-d9fa-4e86-a7d0-175e6573b608" />
 
