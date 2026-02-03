@@ -28,6 +28,24 @@ Then simply move this to your workspace and extract it.
 
 ## 5. Decrypting the database (by extracting key)
 
+### Attempt 2: Frida
+
+<img width="681" height="564" alt="image" src="https://github.com/user-attachments/assets/29e3c0b6-8a52-418e-b725-1142cb6f2205" />
+
+We simply observe from the Signal-Android source code that:
+- The database decryption key is in `app/src/main/java/org/thoughtcrime/securesms/crypto/DatabaseSecret.java`
+  - Thus, we can obtain the database decryption key simply by running a script via Frida. (refer to `extraction.js`)
+  - We run via the following command: `frida -U -f org.thoughtcrime.securesms -l <script>.js` (In this case, `extraction.js`).
+  - Key functions to observe:
+    - `asString()` returns the encoded bytes
+    - `asBytes()` returns the raw bytes
+  - Thus, our script simply looks for DatabaseSecret in runtime and logs the value of DatabaseSecret.asString(); 
+
+
+Refer to `script.js`. 
+
+
+<del>
 Credits to [rado0z](https://rado0z.github.io/Decrypt_Android_Database) and [KnugiHK](https://blog.knugi.com/202107/151300-Decrypting-Signal-Conversation-Database.html)
 
 We need 3 things.
@@ -39,22 +57,23 @@ We need 3 things.
 ### 2. SignalSecret
   - As my emulator is running in Android 12+ (16), The keystore filesystem is different.
   - It is now a sqlite database under `/data/misc/keystore/persistent.sqlite`
-<img width="828" height="148" alt="image" src="https://github.com/user-attachments/assets/1eb84d46-b12d-4eec-80ca-8beec4e5bbe8" />
 
 - We obtain the id that corresponds to the alias `SignalSecret` in `keyentry` table.
 - Then, we look for the blob with `keyentryid` corresponding to `id`.
   - Unfortunately, currently stuck here. Not sure which byte offset works (WIP)
   - I'm thinking of bruteforcing all possible 16 byte chunks in the blob.
-    - Did not seem to work.  
+    - Did not seem to work.
+
 
 #### 2.1 Cipher 
 
 Image credit to [rado0z](https://rado0z.github.io/Decrypt_Android_Database)
 
-<img width="1109" height="512" alt="image" src="https://raw.githubusercontent.com/Rado0z/Rado0z.github.io/master/assets/CyberChef.png" />
+`<img width="1109" height="512" alt="image" src="https://raw.githubusercontent.com/Rado0z/Rado0z.github.io/master/assets/CyberChef.png" />`
 
 In theory we should simply be able to plug in the values in the same format to get the decrypted key.
 
+</del>
 
 ## Part 2: Running the application
 
