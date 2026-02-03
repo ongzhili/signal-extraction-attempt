@@ -65,7 +65,7 @@ We simply observe from the Signal-Android source code that:
     - `asBytes()` returns the raw bytes
   - Thus, our script simply looks for DatabaseSecret in runtime and logs the value of DatabaseSecret.asString(); 
 
-#### Attempt 2.1: Actually opening the database
+#### Attempt 2.1: Disabling encryption
 
 <img width="663" height="181" alt="image" src="https://github.com/user-attachments/assets/15a04525-c1f7-4d82-9788-a777c1c6ef7d" />
 
@@ -73,8 +73,15 @@ We simply observe from the Signal-Android source code that:
   - We note the PRAGMA `kdf_iter = 1` and `page_size = 4096`. We can set these and `SHA1` in SQLCipher DB browser to view the database entries.
   - We will need to use these PRAGMAs along with the key to programatically open the database though.
 
-Refer to `script.js`. 
+<img width="833" height="382" alt="image" src="https://github.com/user-attachments/assets/3d4eee66-d9fa-4e86-a7d0-175e6573b608" />
 
+We then open `Tools` -> `Set Encryption` and leave the password as blank. This removes the database encryption, and we can then use it for our viewer.
+- Had issues setting the PRAGMAs to open the database via any js library, so removing the encryption was a workaround solution.
+
+
+
+
+#### Failed Attempts
 
 <del>
 Credits to [rado0z](https://rado0z.github.io/Decrypt_Android_Database) and [KnugiHK](https://blog.knugi.com/202107/151300-Decrypting-Signal-Conversation-Database.html)
