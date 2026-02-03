@@ -25,3 +25,5 @@ frontend/*.sw?
 
 
 backend/node_modules
+backend/uploads/signal.db
+backend/uploads/secret.txt

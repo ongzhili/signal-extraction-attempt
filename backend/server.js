@@ -2,26 +2,42 @@ const express = require('express');
 const sqlite3 = require('sqlite3').verbose();
 const cors = require('cors');
 const path = require('path');
-const UnencryptedMessageDao = require('./dao/unencryptedDao');
+const DecryptedDAO = require('./dao/decryptedDbDao');
 
 const app = express();
 const PORT = 3000;
 
-// Enable CORS (so your SPA can fetch)
 app.use(cors());
 app.use(express.json());
 
-// Open SQLite database (replace with your path)
-const dbPath = path.join(__dirname, 'uploads/db.db');
-const messageDao = new UnencryptedMessageDao(dbPath);
+const dbFile = path.join(__dirname, 'uploads/signal.db');
+const secretFile = path.join(__dirname, 'uploads/secret.txt');
+const messageDao = new DecryptedDAO(dbFile, secretFile);
+messageDao.open();
 
-app.get('/getMessages', async (req, res) => {
+app.get("/getMessages", (req, res) => {
   try {
-    const messages = await messageDao.getAllMessages();
-    res.json(messages);
+    const toRecipientId = req.query.recipient;
+
+    if (!toRecipientId) {
+      return res.status(400).json({ error: "recipient is required" });
+    }
+
+    const messages = messageDao.getMessages(toRecipientId);
+    res.json({ messages });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: 'Failed to fetch messages' });
+    res.status(500).json({ error: "Failed to fetch messages" });
+  }
+});
+
+app.get('/getRecipients', async (req, res) => {
+  try {
+    const recipients = messageDao.getRecipients();
+    res.json({ recipients });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to fetch recipients" });
   }
 });
 
@@ -33,3 +49,4 @@ app.get('/', (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
+

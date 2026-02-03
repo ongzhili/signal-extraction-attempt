@@ -1,16 +1,15 @@
 import './chatBubble.css';
 
-function ChatBubble({ msg, currentUser = 'alice' }) {
+function ChatBubble({ msg, currentUser = 'You' }) {
   const isRight = msg.sender_name === currentUser;
   // debugMessage(msg, currentUser);
 
   return (
     <li className="message-item">
       <div className={`message-bubble ${isRight ? 'right' : 'left'}`}>
-        <span className="sender">{msg.sender_name}</span> →{' '}
-        <span className="receiver">{msg.receiver_name}</span>
+        <span className="sender">{msg.sender_name}</span>
 
-        <p>{msg.message_text}</p>
+        <p>{msg.body}</p>
 
         <span className="status">{msg.status}</span>
       </div>
@@ -24,10 +23,7 @@ function debugMessage(msg, currentUser) {
   console.log('ChatBubble render:');
   console.log('  currentUser:', currentUser);
   console.log('  sender_name:', msg.sender_name);
-  console.log('  receiver_name:', msg.receiver_name);
-  console.log('  message_text:', msg.message_text);
-  console.log('  status:', msg.status);
-  console.log('  isLeft:', isLeft);
+  console.log('  message_text:', msg.body);
 
   return isLeft;
 }
