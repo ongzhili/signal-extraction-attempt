@@ -3,28 +3,35 @@ import './App.css';
 import ChatContainer from './components/chatContainer';
 import ChatsList from './components/chatsList';
 
-
-const placeholderChats = [
-  { id: 1, name: 'Alice' },
-  { id: 2, name: 'Bob' },
-  { id: 3, name: 'Charlie' },
-  { id: 4, name: 'David' },
-];
-
-
 export default function App() {
+  const [recipients, setRecipients] = useState([]);
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [topic, setTopic] = useState(null);
+
+  async function handleSelectRecipient(recipient) {
+    try {
+      setTopic(recipient.name);
+      const res = await fetch(`/api/getMessages?recipient=${recipient.id}`);
+      const data = await res.json();
+      console.log('Parsed message data', data);
+      setMessages(data.messages);
+    } catch (err) {
+      console.error('Error fetching messages:', err);
+      setMessages([]);
+    }
+  }
 
   useEffect(() => {
-    async function fetchMessages() {
+    async function fetchRecipients() {
       console.log('Fetching messages from API...');
 
       try {
-        const res = await fetch(`/api/getMessages`);
+        const res = await fetch(`/api/getRecipients`);
         console.log('Raw response object:', res);
         const data = await res.json();
-        setMessages(data);
+        console.log('Parsed response data:', data.recipients);
+        setRecipients(data.recipients);
       } catch (err) {
         console.error('Error fetching messages:', err);
       } finally {
@@ -32,7 +39,7 @@ export default function App() {
       }
     }
 
-    fetchMessages();
+    fetchRecipients();
   }, []);
 
   if (loading) return <p>Loading messages...</p>;
@@ -40,12 +47,14 @@ export default function App() {
   return (
     <div className="chat-wrapper">
       <ChatsList
-        chats={placeholderChats}
+        recipients={recipients}
+        onSelectRecipient={handleSelectRecipient}
       />
 
       <ChatContainer
         messages={messages}
-        currentUser="alice"
+        currentUser="You"
+        topic={topic}
       />
     </div>
   );
